@@ -11,7 +11,7 @@ from movies_scraper import search_movies, get_movie
 TOKEN = os.getenv("TOKEN")
 URL = "https://movies-downloader-bot-ten-phi.vercel.app"
 bot = Bot(TOKEN)
-
+OWNER_USER_ID = "1932612943"
 
 #def welcome(update, context) -> None:
     #update.message.reply_text(f"Hello {update.message.from_user.first_name}, Welcome to SB Movies.\n"
@@ -55,11 +55,16 @@ def movie_result(update, context) -> None:
 def setup():
     update_queue = Queue()
     dispatcher = Dispatcher(bot, update_queue, use_context=True)
+      dispatcher.add_handler(CommandHandler('start', notify_owner))
     dispatcher.add_handler(CommandHandler('start', welcome))
     dispatcher.add_handler(MessageHandler(Filters.text, find_movie))
     dispatcher.add_handler(CallbackQueryHandler(movie_result))
     return dispatcher
 
+def notify_owner(update, context):
+user = update.message.from_user
+message = f"New user started the bot!\n\nUser Details:\nUsername: {user.username}\nName: {user.first_name} {user.last_name}\nUser ID: {user.id}"
+context.bot.send_message(chat_id=OWNER_USER_ID, text=message)
 
 def create_inline_keyboard():
     keyboard = [
