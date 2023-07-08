@@ -55,7 +55,7 @@ def movie_result(update, context) -> None:
 def setup():
     update_queue = Queue()
     dispatcher = Dispatcher(bot, update_queue, use_context=True)
-      dispatcher.add_handler(CommandHandler('start', notify_owner))
+    dispatcher.add_handler(CommandHandler('start', notify_owner))
     dispatcher.add_handler(CommandHandler('start', welcome))
     dispatcher.add_handler(MessageHandler(Filters.text, find_movie))
     dispatcher.add_handler(CallbackQueryHandler(movie_result))
