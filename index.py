@@ -4,12 +4,18 @@ from queue import Queue
 import requests
 from flask import Flask, request
 from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import CommandHandler, MessageHandler, CallbackQueryHandler, Dispatcher
+from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackQueryHandler, Dispatcher
+from movies_scraper import search_movies, get_movie
+
 
 TOKEN = os.getenv("TOKEN")
 URL = "https://movies-downloader-bot-ten-phi.vercel.app"
 bot = Bot(TOKEN)
-OWNER_USER_ID = "1932612943"
+
+#def welcome(update, context) -> None:
+    #update.message.reply_text(f"Hello {update.message.from_user.first_name}, Welcome to SB Movies.\n"
+                              #f"🔥 Download Your Favourite Movies For 💯 Free And 🍿 Enjoy it.")
+    #update.message.reply_text("👇 Enter Movie Name 👇")
 
 
 def find_movie(update, context):
@@ -27,7 +33,7 @@ def find_movie(update, context):
         search_results.edit_text('Sorry 🙏, No Result Found!\nCheck If You Have Misspelled The Movie Name.')
 
 
-def movie_result(update, context):
+def movie_result(update, context) -> None:
     query = update.callback_query
     s = get_movie(query.data)
     response = requests.get(s["img"])
@@ -48,18 +54,15 @@ def movie_result(update, context):
 def setup():
     update_queue = Queue()
     dispatcher = Dispatcher(bot, update_queue, use_context=True)
-    dispatcher.add_handler(CommandHandler('start', notify_owner))
     dispatcher.add_handler(CommandHandler('start', welcome))
     dispatcher.add_handler(MessageHandler(Filters.text, find_movie))
     dispatcher.add_handler(CallbackQueryHandler(movie_result))
     return dispatcher
 
-
 def notify_owner(update, context):
-    user = update.message.from_user
-    message = f"New user started the bot!\n\nUser Details:\nUsername: {user.username}\nName: {user.first_name} {user.last_name}\nUser ID: {user.id}"
-    context.bot.send_message(chat_id=OWNER_USER_ID, text=message)
-
+user = update.message.from_user
+message = f"New user started the bot!\n\nUser Details:\nUsername: {user.username}\nName: {user.first_name} {user.last_name}\nUser ID: {user.id}"
+context.bot.send_message(chat_id="1932612943", text=message)
 
 def create_inline_keyboard():
     keyboard = [
@@ -70,7 +73,7 @@ def create_inline_keyboard():
     return InlineKeyboardMarkup(keyboard)
 
 
-def welcome(update, context):
+def welcome(update, context) -> None:
     update.message.reply_text(f"Hello {update.message.from_user.first_name}, Welcome to SB Movies.\n"
                               f"🔥 Download Your Favourite Movies For 💯 Free And 🍿 Enjoy it.\n \n Any problem than you should visit our support given below")
     update.message.reply_text("👇 Enter Movie Name 👇", reply_markup=create_inline_keyboard())
@@ -101,5 +104,3 @@ def set_webhook():
         return "webhook setup ok"
     else:
         return "webhook setup failed"
-
-
