@@ -59,10 +59,6 @@ def setup():
     dispatcher.add_handler(CallbackQueryHandler(movie_result))
     return dispatcher
 
-def notify_owner(update, context):
-user = update.message.from_user
-message = f"New user started the bot!\n\nUser Details:\nUsername: {user.username}\nName: {user.first_name} {user.last_name}\nUser ID: {user.id}"
-context.bot.send_message(chat_id="1932612943", text=message)
 
 def create_inline_keyboard():
     keyboard = [
