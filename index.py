@@ -63,8 +63,8 @@ def setup():
 
 def create_inline_keyboard():
     keyboard = [
-        [InlineKeyboardButton("⏫💕Our Official channel", callback_data="https://t.me/bot_list_hub")],
-        [InlineKeyboardButton("🔴Official Support Group💕", callback_data="https://t.me/mehulsupport")],
+        [InlineKeyboardButton("⏫💕Our Official channel", url="https://t.me/bot_list_hub")],
+        [InlineKeyboardButton("🔴Official Support Group💕", url="https://t.me/mehulsupport")],
         [InlineKeyboardButton("✅Developer", url="https://t.me/Patil_Mehul")]
     ]
     return InlineKeyboardMarkup(keyboard)
