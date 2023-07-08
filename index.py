@@ -103,6 +103,3 @@ def set_webhook():
         return "webhook setup failed"
 
 
-if __name__ == "__main__":
-    setup()
-    app.run(threaded=True)
