@@ -13,10 +13,10 @@ URL = "https://movies-downloader-bot-ten-phi.vercel.app"
 bot = Bot(TOKEN)
 
 
-def welcome(update, context) -> None:
-    update.message.reply_text(f"Hello {update.message.from_user.first_name}, Welcome to SB Movies.\n"
-                              f"🔥 Download Your Favourite Movies For 💯 Free And 🍿 Enjoy it.")
-    update.message.reply_text("👇 Enter Movie Name 👇")
+#def welcome(update, context) -> None:
+    #update.message.reply_text(f"Hello {update.message.from_user.first_name}, Welcome to SB Movies.\n"
+                              #f"🔥 Download Your Favourite Movies For 💯 Free And 🍿 Enjoy it.")
+    #update.message.reply_text("👇 Enter Movie Name 👇")
 
 
 def find_movie(update, context):
@@ -59,6 +59,24 @@ def setup():
     dispatcher.add_handler(MessageHandler(Filters.text, find_movie))
     dispatcher.add_handler(CallbackQueryHandler(movie_result))
     return dispatcher
+
+
+def create_inline_keyboard():
+    keyboard = [
+        [InlineKeyboardButton("⏫💕Our Official channel", callback_data="https://t.me/bot_list_hub")],
+        [InlineKeyboardButton("🔴Official Support Group💕", callback_data="https://t.me/mehulsupport")],
+        [InlineKeyboardButton("✅Developer", url="https://t.me/Patil_Mehul")]
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+
+def welcome(update, context) -> None:
+    update.message.reply_text(f"Hello {update.message.from_user.first_name}, Welcome to SB Movies.\n"
+                              f"🔥 Download Your Favourite Movies For 💯 Free And 🍿 Enjoy it.\n \n Any problem than you should visit our support given below")
+    update.message.reply_text("👇 Enter Movie Name 👇", reply_markup=create_inline_keyboard())
+
+
+# Rest of the code remains the same
 
 
 app = Flask(__name__)
