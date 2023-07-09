@@ -71,7 +71,7 @@ def create_inline_keyboard():
 
 def welcome(update, context) -> None:
     update.message.reply_text(f"Hello {update.message.from_user.first_name}, Welcome to SB Movies.\n"
-                              f"🔥 Download Your Favourite Movies For 💯 Free And 🍿 Enjoy it.\n \n Any problem than you should visit our support given below")
+                              f"🔥 Download Your Favourite Movies For 💯 Free And 🍿 Enjoy it.\n \n Any problem than you should visit our support given below Watch the video \n for download link https://t.me/mehulsupport/592")
     update.message.reply_text("👇 Enter Movie Name 👇", reply_markup=create_inline_keyboard())
 
 
